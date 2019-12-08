@@ -44,6 +44,7 @@
             startRotatedHeight:      0.1,
             restrictToImage:         false,
             onSelection:             null,
+            onSelectionChange:       null,
             prefixUrl:               null,
             navImages:               {
                 selection: {
@@ -270,6 +271,7 @@
         }
 
         this.viewer.addHandler('selection', this.onSelection);
+        this.viewer.addHandler('selection_change', this.onSelectionChange);
 
         this.viewer.addHandler('open', this.draw.bind(this));
         this.viewer.addHandler('animation', this.draw.bind(this));
@@ -312,6 +314,7 @@
                 this.overlay.update(this.rect.normalize());
                 this.overlay.drawHTML(this.viewer.drawer.container, this.viewer.viewport);
             }
+            this.viewer.raiseEvent('selection_change', this.rect ? this.rect.normalize() : null);
             return this;
         },
 
@@ -407,7 +410,7 @@
             this.rect.y += this.rect.height;
             this.rect.height = Math.abs(this.rect.height);
         }
-        
+
         // Eable move after new selection is done
         this.viewer.setMouseNavEnabled(true);
         this.rectDone = true;
@@ -497,7 +500,7 @@
         }
         this.draw();
     }
-    
+
     // After you have completed dragging, ensure the top left of the selection
     // box is still the top left corner of the box
     function onBorderDragEnd(){
