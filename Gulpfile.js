@@ -19,16 +19,18 @@ gulp.task('uglify', function() {
         .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('watch', ['uglify'], function () {
-    gulp.watch('./src/*.js', ['uglify']);
-});
+gulp.task('build', gulp.series('uglify'));
+
+gulp.task('watch', gulp.series('uglify', () => {
+    gulp.watch('./src/*.js', gulp.series('uglify'));
+}));
 
 gulp.task('serve', plugins.serve({
     root: ['dist', 'images'],
     port: 4040,
 }));
 
-gulp.task('default', ['watch', 'serve']);
+gulp.task('default', gulp.series('watch'), gulp.series('serve'));
 
 
 /**
