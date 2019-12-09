@@ -34,6 +34,8 @@ Then you can alter the selection state with any of these:
         startRotatedHeight:      0.1, // only used if startRotated=true; value is relative to image height
         restrictToImage:         false, // true = do not allow any part of the selection to be outside the image
         onSelection:             function(rect) {}, // callback
+        onMoveStart:             function(rect) {}, // callback
+        onMoveEnd:               function(rect) {}, // callback
         prefixUrl:               null, // overwrites OpenSeadragon's option
         navImages:               { // overwrites OpenSeadragon's options
             selection: {
